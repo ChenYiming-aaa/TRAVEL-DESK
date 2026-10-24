@@ -1,0 +1,167 @@
+<body>
+<div id="app">
+  <!-- ===== 顶栏 ===== -->
+  <header id="topbar">
+    <div class="brand">
+      <span class="brand-badge" id="brand-badge"></span>
+      <div class="brand-txt">
+        <b>旅行工作台</b>
+        <small>TRAVEL DESK · 手账像素版</small>
+      </div>
+    </div>
+    <div class="top-right">
+      <div class="level-chip" id="level-chip" title="等级与经验">
+        <span id="chip-level">LV.1</span>
+        <div class="expbar mini"><i id="chip-exp" style="width:0%"></i></div>
+      </div>
+      <button class="icon-btn" id="sync-btn" title="同步状态" aria-label="同步状态"></button>
+    </div>
+  </header>
+
+  <!-- ===== 离线队列提示条 ===== -->
+  <div class="sync-bar hidden" id="sync-bar">
+    <span class="sync-dot off" id="sync-bar-dot"></span>
+    <span id="sync-bar-text"></span>
+    <button class="btn small" id="sync-retry">立即重试</button>
+  </div>
+
+  <main id="views">
+    <!-- ===== TAB 1 · 地图 ===== -->
+    <section class="view active" id="view-map">
+      <div class="today-card" id="today-card"></div>
+      <div class="stats-bar" id="stats-bar" role="button" title="查看足迹库"></div>
+      <div id="map-shell">
+        <div id="china-map"></div>
+        <div id="map-hint">滚轮/双指缩放 · 拖拽平移 · 双击空白复位</div>
+        <div class="map-loading" id="map-loading">地图加载中…</div>
+      </div>
+      <div class="info-flow">
+        <div class="card" id="profile-card">
+          <div class="card-tape"></div>
+          <div id="profile-card-body"></div>
+        </div>
+        <div class="card" id="recent-card">
+          <div class="card-tape right"></div>
+          <div class="card-title"><span class="dot"></span>最近足迹<span class="right" id="recent-more"></span></div>
+          <div id="recent-body"></div>
+        </div>
+        <div class="card" id="nexttask-card">
+          <div class="card-title"><span class="dot"></span>下一个任务<span class="right" id="nexttask-more"></span></div>
+          <div id="nexttask-body"></div>
+        </div>
+        <div class="card" id="book-card">
+          <div class="card-tape"></div>
+          <div class="card-title"><span class="dot"></span>每日答案之书<span class="right" id="book-date"></span></div>
+          <div class="book-quote" id="book-quote"></div>
+          <div style="margin-top:10px;text-align:right">
+            <button class="btn small" id="book-shuffle">换一句</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TAB 2 · 足迹 ===== -->
+    <section class="view" id="view-foot">
+      <div class="view-head">
+        <div><h2>足迹库</h2><div class="sub" id="foot-count"></div></div>
+        <button class="btn small" id="foot-batch-toggle">多选</button>
+        <button class="btn primary" id="btn-add-foot">＋ 记录足迹</button>
+      </div>
+      <div class="filters">
+        <select id="f-province" aria-label="按省份筛选"></select>
+        <select id="f-tag" aria-label="按标签筛选"></select>
+        <select id="f-year" aria-label="按年份筛选"></select>
+        <div class="search-row">
+          <input id="f-q" class="foot-search" placeholder="搜索城市 / 记忆 / 标签" aria-label="搜索足迹">
+          <button class="btn small ghost" id="f-reset">重置</button>
+        </div>
+      </div>
+      <div id="foot-list"></div>
+      <div id="foot-batch-bar" class="batch-bar hidden"></div>
+      <div class="empty hidden" id="foot-empty">
+        <div class="big">🗺️</div>
+        <div>这里还没有足迹记录</div>
+        <div class="small" style="margin-top:6px">点「记录足迹」，把第一座城市盖上邮戳</div>
+      </div>
+    </section>
+
+    <!-- ===== TAB 3 · 行程 ===== -->
+    <section class="view" id="view-trip">
+      <div class="view-head">
+        <div><h2>行程</h2><div class="sub">计划 → 任务 → 完成</div></div>
+        <button class="btn primary" id="btn-add-trip">＋ 新建行程</button>
+      </div>
+      <div id="trip-list"></div>
+      <div class="empty hidden" id="trip-empty">
+        <div class="big">🧭</div>
+        <div>还没有行程计划</div>
+        <div class="small" style="margin-top:6px">新建一个行程，开始逐小时规划</div>
+      </div>
+      <div id="trip-detail" class="hidden"></div>
+    </section>
+
+    <!-- ===== TAB 4 · 存档 ===== -->
+    <section class="view" id="view-archive">
+      <div class="view-head">
+        <div><h2>存档</h2><div class="sub">旅行者人物卡</div></div>
+      </div>
+      <div class="save-card" id="save-card"></div>
+      <div class="card" id="snapshot-card">
+        <div class="card-tape right"></div>
+        <div class="card-title"><span class="dot"></span>存档快照<span class="right">只读回看，可存多版</span></div>
+        <div class="btn-row" style="margin-bottom:12px">
+          <button class="btn primary" id="btn-save-snap">一键存档</button>
+          <button class="btn" id="btn-save-img">保存为长图</button>
+          <button class="btn" id="btn-copy-share">复制分享文本</button>
+        </div>
+        <div id="snap-list"></div>
+      </div>
+      <div class="card" id="ach-card">
+        <div class="card-title"><span class="dot"></span>成就墙<span class="right" id="ach-count"></span></div>
+        <div class="ach-grid" id="ach-grid"></div>
+      </div>
+      <div class="card" id="data-card">
+        <div class="card-title"><span class="dot"></span>数据管理</div>
+        <div class="btn-row">
+          <button class="btn" id="btn-export">导出 JSON 备份</button>
+          <button class="btn" id="btn-import">导入恢复</button>
+          <button class="btn danger" id="btn-clear">清空全部数据</button>
+        </div>
+        <div class="hint small muted" style="margin-top:8px" id="data-hint"></div>
+        <details style="margin-top:10px">
+          <summary style="cursor:pointer;font-family:var(--mono);font-weight:700;font-size:13px;color:var(--caramel-deep)">⌨️ 键盘快捷键</summary>
+          <div class="small muted" style="margin-top:8px;line-height:2">
+            <b>1 / 2 / 3 / 4</b> 切换 地图 / 足迹 / 行程 / 存档<br>
+            <b>/</b> 聚焦足迹搜索 ｜ <b>n</b> 地图页快速记录 ｜ <b>Esc</b> 关闭弹层
+          </div>
+        </details>
+      </div>
+      <div class="card" id="help-card">
+        <div class="card-tape"></div>
+        <div class="card-title"><span class="dot"></span>使用说明</div>
+        <ul class="help-list">
+          <li><b>地图交互</b>：点击 / 悬停省份看足迹详情；点击城市像素点看到访记录；点未去省份可「标记为想去」；双击地图空白处复位；滚轮 / 双指缩放，拖拽平移。</li>
+          <li><b>行程模块</b>：新建行程后按日期生成每日计划框架，逐小时添加「时间 / 地点 / 做什么 / 时长 / 备注」；交通条目自动生成 12306 / 携程 / 去哪儿 搜索深链（不编造车次）；任务按截止日排序、勾选得经验；标记完成后会提示把新城市加入足迹。</li>
+          <li><b>数据存储</b>：全部数据保存在本机浏览器 localStorage，写操作即时落盘（防抖 300ms）；换设备 / 换浏览器用「导出 JSON 备份」与「导入恢复」迁移。</li>
+          <li><b>离线使用</b>：直接双击本 HTML 文件也能用，数据存在浏览器 localStorage；建议定期「导出 JSON 备份」。</li>
+          <li><b>经验规则</b>：新足迹 +10 EXP，完成任务 +15 EXP，完成行程 +50 EXP，解锁成就 +30 EXP，每 100 EXP 升 1 级（LV.1–30）。</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== 底部导航 ===== -->
+  <nav id="bottomnav"></nav>
+</div>
+
+<div id="sheet-root"></div>
+<div id="modal-root"></div>
+<div id="toast-root" role="status" aria-live="polite"></div>
+<div id="exp-float-root" aria-hidden="true"></div>
+<div id="levelup-root"></div>
+<div id="hover-card" class="hidden"></div>
+<!-- 快速记录 FAB：必须挂在 body 直属（.view 的入场动画 transform 会成为 fixed 的 containing block） -->
+<button id="fab-note" class="fab-note" aria-label="快速记录足迹" title="快速记录（n）">+</button>
+<input type="file" id="import-file" accept=".json,application/json" hidden>
+</body>
+</html>

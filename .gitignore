@@ -1,0 +1,21 @@
+# 依赖
+node_modules/
+
+# 测试产物
+tests/*.png
+!tests/visual_baseline/*.png
+
+# Python
+__pycache__/
+*.pyc
+
+# 组装中间产物
+src/geojson_wrapped.js
+
+# 系统
+.DS_Store
+Thumbs.db
+
+# 编辑器
+.vscode/
+.idea/
