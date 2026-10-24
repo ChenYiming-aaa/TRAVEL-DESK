@@ -28,11 +28,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: |
-            index.html
-            README.md
-            src
-            tests
+          # 只上传入口文件：tests/node_modules 等本地依赖不进 artifact
+          path: 'index.html'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
